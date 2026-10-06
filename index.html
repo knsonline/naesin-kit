@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>시험지 콘텐츠 키트</title>
+  <meta name="description" content="영어 내신 시험지 한 부로 학부모용 네이버 블로그 글과 인스타그램 카드뉴스를 만드는 무료 키트">
+  <meta property="og:title" content="시험지 콘텐츠 키트">
+  <meta property="og:description" content="시험지 한 부로 블로그 글과 카드뉴스 6장을. 무료로 씁니다.">
+  <meta property="og:image" content="assets/site-1.jpg">
+  <link rel="stylesheet" href="studio/fonts/fonts.css">
+  <style>
+    :root {
+      --ink: #15181D; --muted: #5E6570; --line: #E3E6EA; --bg: #F6F5F1; --panel: #FFFFFF;
+      --accent: #1F5C4A; --accent-2: #2456E8; --soft: #EAF2EE;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body { background: var(--bg); color: var(--ink); font-family: "kit-notosans", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; line-height: 1.6; word-break: keep-all; }
+    a { color: inherit; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    header.top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+    header.top b { font-weight: 900; font-size: 17px; }
+    header.top a { font-size: 14px; color: var(--muted); text-decoration: none; }
+
+    .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; padding: 32px 0 56px; }
+    .hero h1 { margin: 0 0 16px; font-family: "kit-notoserif"; font-weight: 900; font-size: clamp(32px, 5vw, 50px); line-height: 1.22; letter-spacing: -1px; }
+    .hero p.lead { margin: 0 0 28px; font-size: 18px; color: #3A4048; }
+    .cta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 14px 22px; border-radius: 12px; font-weight: 800; font-size: 16px; text-decoration: none; border: 1px solid var(--line); background: #fff; }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn small { font-weight: 500; font-size: 13px; opacity: .8; }
+    .free { margin-top: 14px; font-size: 13px; color: var(--muted); }
+    .stack { position: relative; height: 470px; }
+    .stack img { position: absolute; width: 56%; border-radius: 10px; box-shadow: 0 18px 40px rgba(20, 30, 25, .18); }
+    .stack img:nth-child(1) { left: 0; top: 40px; transform: rotate(-4deg); }
+    .stack img:nth-child(2) { left: 22%; top: 0; z-index: 2; }
+    .stack img:nth-child(3) { right: 0; top: 56px; transform: rotate(4deg); }
+
+    section { padding: 48px 0; }
+    section h2 { margin: 0 0 8px; font-size: 26px; font-weight: 900; letter-spacing: -.5px; }
+    section > .wrap > p.sub { margin: 0 0 28px; color: var(--muted); }
+    .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .box { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+    .box h3 { margin: 0 0 6px; font-size: 18px; font-weight: 900; }
+    .box p { margin: 0; color: #3A4048; font-size: 15px; }
+    .num { display: inline-block; font-family: "kit-notoserif"; font-weight: 900; font-size: 30px; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+
+    .ways { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .way { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 26px; display: flex; flex-direction: column; }
+    .way.main { border: 2px solid var(--accent); }
+    .tag { align-self: flex-start; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 99px; background: var(--soft); color: var(--accent); margin-bottom: 10px; }
+    .way h3 { margin: 0 0 4px; font-size: 21px; font-weight: 900; }
+    .way .need { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+    .way ol { margin: 0 0 20px; padding-left: 20px; }
+    .way li { margin-bottom: 6px; }
+    .way .btn { margin-top: auto; }
+
+    .gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+    .gallery img { width: 100%; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+
+    .checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .check { display: flex; gap: 12px; align-items: flex-start; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+    .check b { display: block; margin-bottom: 2px; }
+    .check span { color: #3A4048; font-size: 14px; }
+    .mark { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 14px; }
+
+    .compare { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 15px; }
+    .compare th, .compare td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    .compare tr:last-child td { border-bottom: 0; }
+    .compare th { background: #FAFAF8; font-size: 13px; color: var(--muted); }
+    .compare td:first-child { color: #8A3B30; }
+    .compare td:last-child { color: var(--accent); font-weight: 700; }
+
+    .faq details { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; }
+    .faq summary { font-weight: 800; cursor: pointer; }
+    .faq p { margin: 10px 0 0; color: #3A4048; }
+
+    .privacy { background: var(--accent); color: #fff; border-radius: 18px; padding: 26px 28px; display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; }
+    .privacy b { font-size: 18px; }
+    .privacy p { margin: 4px 0 0; opacity: .9; }
+    .lock { width: 52px; height: 52px; border-radius: 14px; background: rgba(255,255,255,.15); display: grid; place-items: center; font-size: 26px; }
+
+    footer { padding: 40px 0 56px; color: var(--muted); font-size: 13px; }
+    footer a { color: var(--muted); }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; gap: 24px; padding-top: 8px; }
+      .stack { height: 360px; }
+      .three, .ways, .checks { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: repeat(3, 1fr); }
+      .privacy { grid-template-columns: 1fr; }
+      .compare { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <b>시험지 콘텐츠 키트</b>
+      <a href="studio.html">스튜디오 열기 →</a>
+    </header>
+
+    <div class="hero">
+      <div>
+        <h1>시험지 한 부로<br>블로그 글과<br>카드뉴스 6장을</h1>
+        <p class="lead">영어 내신 시험지를 AI가 읽고, 키트가 숫자와 말투를 점검하고, 우리 학원 디자인으로 카드를 만듭니다.</p>
+        <div class="cta">
+          <a class="btn primary" href="studio.html">웹에서 바로 만들기</a>
+          <a class="btn" href="downloads/exam-content-kit.zip" download>키트 내려받기 <small>Claude Code용</small></a>
+        </div>
+        <p class="free">무료입니다. 설치 없이 ChatGPT나 Claude 채팅만 있으면 시작할 수 있어요.</p>
+      </div>
+      <div class="stack" aria-hidden="true">
+        <img src="assets/site-2.jpg" alt="">
+        <img src="assets/site-1.jpg" alt="">
+        <img src="assets/site-3.jpg" alt="">
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <h2>시험지 하나에서 나오는 것</h2>
+      <p class="sub">시험 때마다 들어오는 시험지가 블로그와 인스타그램에 올릴 가장 좋은 재료입니다.</p>
+      <div class="three">
+        <div class="box"><span class="num">1</span><h3>네이버 블로그 글</h3><p>배점 구조, 출제 특징, 대표 문항 해설, 상담 안내까지. 제목과 본문을 복사해 붙여 넣으면 됩니다.</p></div>
+        <div class="box"><span class="num">6</span><h3>인스타그램 카드뉴스</h3><p>1080×1350 세로 6장. 학원 색, 글꼴, 로고로 바꾸고 PNG로 저장합니다.</p></div>
+        <div class="box"><span class="num">#</span><h3>캡션과 해시태그</h3><p>학교, 학년, 지역 해시태그까지 붙은 인스타 캡션을 함께 만듭니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>두 가지 방법</h2>
+      <p class="sub">처음에는 웹에서 시작하고, 자주 쓰게 되면 자동으로 바꿔도 됩니다.</p>
+      <div class="ways">
+        <div class="way main">
+          <span class="tag">설치 없음</span>
+          <h3>웹에서 바로 만들기</h3>
+          <p class="need">필요한 것: ChatGPT 또는 Claude 채팅</p>
+          <ol>
+            <li>스튜디오의 <b>만들기</b>에서 학원 정보를 적고 프롬프트를 복사합니다.</li>
+            <li>채팅에 시험지 PDF를 첨부하고 붙여 넣습니다.</li>
+            <li>AI가 준 결과를 스튜디오에 붙여 넣으면 점검이 됩니다.</li>
+            <li>고칠 곳이 있으면 수정 요청을 복사해 다시 보냅니다.</li>
+          </ol>
+          <a class="btn primary" href="studio.html">스튜디오 열기</a>
+        </div>
+        <div class="way">
+          <span class="tag">결과가 가장 좋음</span>
+          <h3>Claude Code로 자동으로</h3>
+          <p class="need">필요한 것: Claude 유료 플랜(Pro 이상), Claude 앱, Node.js</p>
+          <ol>
+            <li>키트를 내려받아 압축을 풉니다.</li>
+            <li>Claude 앱의 Code 탭에서 키트 폴더를 엽니다.</li>
+            <li>"시험지로 블로그랑 카드뉴스 만들어 줘"라고 입력합니다. AI가 점검하고 고치는 과정을 혼자 반복합니다.</li>
+          </ol>
+          <a class="btn" href="downloads/exam-content-kit.zip" download>키트 내려받기 (ZIP, 약 10MB)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>학원마다 다른 디자인</h2>
+      <p class="sub">스타일 8가지, 글꼴 10가지, 원하는 색과 로고. 같은 글로 6장이 한 번에 바뀝니다.</p>
+      <div class="gallery">
+        <img src="assets/site-1.jpg" alt="시험지 스타일 표지 예시">
+        <img src="assets/site-2.jpg" alt="컬러 블록 스타일 표지 예시">
+        <img src="assets/site-3.jpg" alt="소식지 스타일 배점 카드 예시">
+        <img src="assets/site-6.jpg" alt="다크 스타일 조건 비교 카드 예시">
+        <img src="assets/site-5.jpg" alt="대표 문항 카드 예시">
+        <img src="assets/site-4.jpg" alt="둥근 카드 스타일 상담 카드 예시">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>AI에게 맡기면 생기는 문제를 막는 장치</h2>
+      <p class="sub">AI는 시험지를 읽고 글을 씁니다. 사실 확인과 말투 검사는 키트가 합니다.</p>
+      <div class="checks">
+        <div class="check"><span class="mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>숫자 대조</b><span>글에 나온 문항 번호와 배점을 시험지에서 만든 문항표와 하나하나 맞춰 봅니다.</span></div></div>
+        <div class="check"><span class="mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>근거 없는 주장 차단</b><span>적중, 성적 향상, 상위권처럼 자료 없이 쓰면 안 되는 말을 잡아냅니다.</span></div></div>
+        <div class="check"><span class="mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>AI 말투 점검</b><span>"살펴보겠습니다", "꼼꼼한 대비가 중요합니다" 같은 표현을 찾아 바꾸게 합니다.</span></div></div>
+        <div class="check"><span class="mark"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>학원 상담으로 마무리</b><span>분석이 우리 학원에서 함께 준비하자는 제안과 상담 문의로 이어지는지 확인합니다.</span></div></div>
+      </div>
+      <p class="sub" style="margin:28px 0 12px">같은 시험지, 다른 글</p>
+      <table class="compare">
+        <thead><tr><th>AI에게 그냥 맡긴 글</th><th>키트로 만든 글</th></tr></thead>
+        <tbody>
+          <tr><td>이번 시험의 특징을 자세히 살펴보겠습니다.</td><td>이번 시험은 서술형 5문항이 40점이었습니다.</td></tr>
+          <tr><td>꼼꼼한 대비가 필수적입니다.</td><td>서술형 한 문항이 8점이라, 하나를 놓치면 선택형 하나보다 2점을 더 잃습니다.</td></tr>
+          <tr><td>체계적인 커리큘럼으로 완벽하게 대비합니다.</td><td>우리 아이가 어느 단계에서 막히는지 궁금하시다면 우리 학원에서 함께 확인해 보세요.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="privacy">
+        <div class="lock" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+        <div>
+          <b>시험지와 결과는 이 사이트로 올라오지 않습니다</b>
+          <p>스튜디오는 모든 작업을 원장님 브라우저 안에서 합니다. 시험지는 원장님이 쓰는 AI 채팅에만 첨부됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="wrap">
+      <h2>자주 묻는 질문</h2>
+      <details><summary>비용이 드나요?</summary><p>키트와 스튜디오는 무료입니다. 웹 방식은 ChatGPT·Claude 채팅(무료 또는 유료)만 있으면 됩니다. Claude Code 방식은 Claude 유료 플랜이 필요합니다.</p></details>
+      <details><summary>어떤 시험지를 넣으면 되나요?</summary><p>중·고등학교 영어 내신 시험지 PDF나 사진이면 됩니다. 이름과 번호가 적혀 있으면 가리고 넣어 주세요. 글자가 흐린 부분은 '판독 불확실'로 표시되고 글에는 쓰지 않습니다.</p></details>
+      <details><summary>정답이 틀리면 어떡하죠?</summary><p>공식 정답이 없기 때문에 글에 정답을 쓰지 않습니다. 대표 문항은 무엇을 보고 어떤 순서로 판단하는지만 설명합니다.</p></details>
+      <details><summary>시험지를 블로그에 그대로 올려도 되나요?</summary><p>시험지 전체를 이미지로 올리지 않는 것을 권합니다. 키트는 대표 문항의 한두 문장만 발췌합니다.</p></details>
+      <details><summary>먼저 연습해 볼 수 있나요?</summary><p><a href="downloads/practice-exam.pdf" download>연습용 가상 시험지</a>를 내려받아 웹 방식으로 해 보세요. 스튜디오의 '예제 열기'로 결과 모습을 먼저 볼 수도 있습니다.</p></details>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>시험지 콘텐츠 키트 · 무료 배포 · <a href="downloads/practice-exam.pdf" download>연습용 가상 시험지</a> · <a href="studio/fonts/NOTICE.txt">글꼴 라이선스 (SIL OFL 1.1)</a></p>
+      <p>게시 전에 문항 번호, 배점, 조건이 시험지와 맞는지 꼭 한 번 확인해 주세요.</p>
+    </div>
+  </footer>
+</body>
+</html>

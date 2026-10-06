@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>콘텐츠 스튜디오</title>
+  <link rel="stylesheet" href="studio/fonts/fonts.css">
+  <link rel="stylesheet" href="studio/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="top-title">
+      <h1>콘텐츠 스튜디오</h1>
+      <span class="sub" id="data-label"></span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="보기">
+      <button type="button" role="tab" data-tab="make" id="tab-make">만들기</button>
+      <button type="button" role="tab" data-tab="cards" id="tab-cards">카드뉴스</button>
+      <button type="button" role="tab" data-tab="blog" id="tab-blog">블로그</button>
+      <button type="button" role="tab" data-tab="check" id="tab-check">점검 <span class="badge"></span></button>
+    </nav>
+    <div class="actions">
+      <span id="warn-total"></span>
+      <button type="button" id="open-load" class="btn">결과 불러오기</button>
+      <button type="button" id="share-cards" class="btn" hidden>휴대폰에 저장</button>
+      <button type="button" id="export-all" class="btn primary">카드 PNG 저장</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel" id="theme-panel" aria-label="학원 테마">
+      <h2>학원 테마</h2>
+      <label class="field"><span>학원 이름</span><input id="t-name" placeholder="비워 두면 '우리 학원'"></label>
+      <label class="field"><span>상담 안내 문구 (마지막 카드)</span><input id="t-contact" placeholder="예: 상담 예약은 프로필 링크에서"></label>
+      <div class="field">
+        <span>로고</span>
+        <div class="logo-row">
+          <label class="btn small">파일 선택<input type="file" id="t-logo" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden></label>
+          <img id="logo-preview" alt="로고 미리보기" hidden>
+          <button type="button" id="logo-clear" class="btn small" hidden>지우기</button>
+        </div>
+      </div>
+
+      <h3>스타일</h3>
+      <div class="style-grid" id="t-style"></div>
+
+      <h3>색</h3>
+      <div class="field">
+        <span>대표 색</span>
+        <div class="color-row"><input type="color" id="t-color" aria-label="대표 색 직접 고르기"><div class="swatches" id="swatches"></div></div>
+      </div>
+      <div class="field">
+        <label class="check-row"><input type="checkbox" id="t-point-on"> 포인트 색 따로 쓰기</label>
+        <input type="color" id="t-point" aria-label="포인트 색" disabled>
+      </div>
+      <p class="note" id="color-note"></p>
+
+      <h3>글꼴</h3>
+      <div class="font-grid" id="t-font"></div>
+
+      <div class="btn-row">
+        <button type="button" id="theme-save" class="btn">테마 저장</button>
+        <label class="btn">테마 불러오기<input type="file" id="theme-load" accept=".json" hidden></label>
+      </div>
+      <button type="button" id="theme-reset" class="link">처음 테마로 되돌리기</button>
+      <p class="note">저장한 테마 파일을 다음 시험 때 불러오면 같은 디자인으로 바로 만들 수 있어요.</p>
+    </aside>
+
+    <!-- 만들기 -->
+    <section class="main make" data-pane="make" aria-label="만들기" hidden>
+      <div class="make-head">
+        <h2>시험지로 블로그와 카드뉴스 만들기</h2>
+        <p>ChatGPT나 Claude 채팅만 있으면 됩니다. 시험지와 결과는 이 화면 밖으로 나가지 않아요.</p>
+      </div>
+      <ol class="make-steps">
+        <li>
+          <h3>학원 정보 적기 <small>비워 두면 '우리 학원'으로 써요</small></h3>
+          <div class="pair">
+            <label class="field"><span>학원 이름</span><input id="m-name" placeholder="예: 새봄영어"></label>
+            <label class="field"><span>지역 (해시태그용)</span><input id="m-region" placeholder="예: 대치동"></label>
+          </div>
+          <label class="field"><span>상담 안내</span><input id="m-contact" placeholder="예: 상담 예약은 프로필 링크에서 받고 있어요"></label>
+          <label class="field"><span>블로그 첫인사</span><input id="m-greeting" placeholder="예: 안녕하세요, 새봄영어입니다."></label>
+        </li>
+        <li>
+          <h3>프롬프트 복사해서 채팅에 보내기</h3>
+          <p>ChatGPT나 Claude에서 <b>새 대화</b>를 열고 <b>시험지 PDF를 첨부</b>한 뒤, 복사한 프롬프트를 붙여 넣어 보내세요. 생각(추론) 모드가 있으면 켜 주세요.</p>
+          <button type="button" id="copy-prompt" class="btn primary">프롬프트 복사</button>
+        </li>
+        <li>
+          <h3>AI가 준 결과 붙여 넣기</h3>
+          <p>AI 답의 코드 블록 전체를 복사해서 아래에 붙여 넣으세요. 코드 블록 오른쪽 위의 복사 버튼을 쓰면 편해요.</p>
+          <textarea id="m-result" rows="6" placeholder="여기에 AI가 준 결과를 붙여 넣으세요"></textarea>
+          <div class="btn-row"><button type="button" id="m-open" class="btn primary">결과 열기</button></div>
+          <p class="m-status" id="m-status" hidden></p>
+        </li>
+        <li>
+          <h3>고칠 곳이 있으면 AI에게 다시 보내기</h3>
+          <p>점검에서 고칠 곳이 나오면 수정 요청을 복사해 <b>같은 대화</b>에 붙여 넣으세요. 새 결과가 오면 3번부터 다시 하면 됩니다. 보통 한두 번이면 끝나요.</p>
+          <button type="button" id="m-fix" class="btn">수정 요청 복사</button>
+        </li>
+        <li>
+          <h3>카드와 블로그 꾸미고 올리기</h3>
+          <p><b>카드뉴스</b> 탭에서 학원 색과 스타일을 고르고 저장하세요. <b>블로그</b> 탭에서 제목과 본문을 복사해 네이버 블로그에 붙여 넣으면 됩니다.</p>
+        </li>
+      </ol>
+    </section>
+    <aside class="panel side" data-pane="make" aria-label="자동으로 만들기" hidden>
+      <h2>자동으로 만들고 싶다면</h2>
+      <p class="note">Claude 유료 플랜(Pro 이상)이 있으면 <b>Claude Code</b>가 시험지를 읽고, 점검하고, 고치는 과정을 혼자 반복합니다. 붙여 넣기가 필요 없고 결과가 가장 좋아요.</p>
+      <ol class="steps">
+        <li>키트를 내려받아 압축을 풉니다.</li>
+        <li>Claude 앱 → Code 탭에서 키트 폴더를 엽니다.</li>
+        <li>"시험지로 블로그랑 카드뉴스 만들어 줘"라고 입력합니다.</li>
+      </ol>
+      <a class="btn primary" id="kit-link" href="downloads/exam-content-kit.zip" download hidden>키트 내려받기 (ZIP)</a>
+      <p class="note" id="kit-local" hidden>지금 키트 폴더에서 열려 있어요. 자세한 방법은 폴더의 <b>시작하기.md</b>를 보세요.</p>
+      <hr>
+      <h3>예제 먼저 보기</h3>
+      <p class="note">연습용 가상 시험지로 만든 결과를 카드뉴스와 블로그 탭에서 볼 수 있어요.</p>
+      <button type="button" id="m-sample" class="btn">예제 열기</button>
+    </aside>
+
+    <!-- 카드뉴스 -->
+    <section class="main" data-pane="cards" aria-label="카드 미리보기">
+      <p class="hint">카드를 누르면 오른쪽에서 글자를 고칠 수 있어요. 글자가 칸을 넘치면 카드 아래에 표시돼요.</p>
+      <div class="cards" id="cards"></div>
+    </section>
+    <aside class="panel side" data-pane="cards" aria-label="카드 편집">
+      <h2 id="edit-title">카드 편집</h2>
+      <div id="edit-fields"></div>
+      <div class="btn-row">
+        <button type="button" id="export-one" class="btn">이 카드 PNG</button>
+        <button type="button" id="reset-card" class="btn">원래대로</button>
+      </div>
+      <hr>
+      <h3>인스타 캡션</h3>
+      <label class="field"><span>원문 ({학원명}은 학원 이름으로 바뀌어요)</span><textarea id="caption" rows="7"></textarea></label>
+      <div class="field"><span>올라갈 모습</span><pre id="caption-preview" class="caption-preview"></pre></div>
+      <div class="btn-row"><button type="button" id="copy-caption" class="btn">캡션 복사</button></div>
+    </aside>
+
+    <!-- 블로그 -->
+    <section class="main" data-pane="blog" aria-label="블로그 미리보기" hidden>
+      <article class="blog" id="blog-view"></article>
+    </section>
+    <aside class="panel side" data-pane="blog" aria-label="블로그 도구" hidden>
+      <h2>네이버 블로그에 올리기</h2>
+      <p class="note" id="blog-meta"></p>
+      <ol class="steps">
+        <li><button type="button" id="copy-title" class="btn small">제목 복사</button> 블로그 제목 칸에 붙여 넣기</li>
+        <li><button type="button" id="copy-rich" class="btn small primary">본문 복사</button> 본문에 붙여 넣기</li>
+        <li><button type="button" id="blog-images" class="btn small">카드 PNG 저장</button> [이미지: …] 자리에 같은 이름의 사진 넣기</li>
+      </ol>
+      <div class="field">
+        <span>정렬</span>
+        <div class="seg two" id="align"><button type="button" data-v="center" class="on">가운데</button><button type="button" data-v="left">왼쪽</button></div>
+      </div>
+      <button type="button" id="copy-plain" class="link">서식 없이 글자만 복사</button>
+    </aside>
+
+    <!-- 점검 -->
+    <section class="main" data-pane="check" aria-label="점검 결과" hidden>
+      <div class="check-summary" id="check-summary"></div>
+      <div id="check-list"></div>
+    </section>
+    <aside class="panel side" data-pane="check" aria-label="점검 도움말" hidden>
+      <h2>점검이 보는 것</h2>
+      <ul class="plain">
+        <li>글의 숫자·문항 번호가 문항표와 같은지</li>
+        <li>성적·적중처럼 근거 없는 주장이 없는지</li>
+        <li>[학원명] 같은 빈칸이 남지 않았는지</li>
+        <li>AI가 자주 쓰는 말투가 3개를 넘지 않는지</li>
+        <li>마지막이 학원 상담 안내로 끝나는지</li>
+        <li>카드 글자가 칸을 넘치지 않는지</li>
+      </ul>
+      <p class="note">글이 설득력 있는지는 점검이 판단하지 못해요. 게시 전에 꼭 한 번 읽어 주세요.</p>
+      <hr>
+      <p class="note">채팅 AI로 만든 결과라면 아래 버튼으로 수정 요청을 복사해 같은 대화에 붙여 넣으세요.</p>
+      <button type="button" id="copy-fix" class="btn">AI에게 보낼 수정 요청 복사</button>
+    </aside>
+  </main>
+
+  <dialog id="load-dialog">
+    <h2>결과 불러오기</h2>
+    <p class="note">Claude Code로 만들었다면 자동으로 열려요. 채팅 AI의 답을 붙여 넣거나 result.json 파일을 고를 수 있어요.</p>
+    <textarea id="paste-box" rows="8" placeholder="AI가 준 결과(JSON)를 여기에 붙여 넣으세요"></textarea>
+    <div class="btn-row">
+      <button type="button" id="load-paste" class="btn primary">붙여 넣은 결과 열기</button>
+      <label class="btn">파일 고르기<input type="file" id="data-file" accept=".json,.js" hidden></label>
+    </div>
+    <div class="btn-row">
+      <button type="button" id="load-sample" class="btn">예제 보기</button>
+      <button type="button" id="load-cancel" class="btn">닫기</button>
+    </div>
+  </dialog>
+
+  <dialog id="save-dialog">
+    <h2>휴대폰에 저장하기</h2>
+    <p class="note">이미지를 길게 눌러 <b>사진에 저장</b>하세요. 01부터 순서대로 인스타그램에 올리면 됩니다.</p>
+    <div class="save-grid" id="save-grid"></div>
+    <div class="btn-row"><button type="button" id="save-close" class="btn">닫기</button></div>
+  </dialog>
+
+  <div id="toast" role="status" hidden></div>
+
+  <script src="studio/palette.js"></script>
+  <script src="studio/text.js"></script>
+  <script src="studio/themes.js"></script>
+  <script src="studio/layouts.js"></script>
+  <script src="studio/check.js"></script>
+  <script src="studio/zip.js"></script>
+  <script src="studio/prompt.js"></script>
+  <script src="data/sample.js"></script>
+  <script src="studio/app.js"></script>
+</body>
+</html>

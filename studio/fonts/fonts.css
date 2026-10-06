@@ -1,0 +1,25 @@
+/* 키트에 포함된 글꼴 (SIL OFL 1.1, NOTICE.txt 참고). 인터넷 없이 동작한다. */
+@font-face { font-family: "kit-notosans"; src: url("notosans-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-notosans"; src: url("notosans-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "kit-notosans"; src: url("notosans-900.woff2") format("woff2"); font-weight: 900; font-display: block; }
+@font-face { font-family: "kit-notoserif"; src: url("notoserif-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-notoserif"; src: url("notoserif-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "kit-notoserif"; src: url("notoserif-900.woff2") format("woff2"); font-weight: 900; font-display: block; }
+@font-face { font-family: "kit-hahmlet"; src: url("hahmlet-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-hahmlet"; src: url("hahmlet-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "kit-hahmlet"; src: url("hahmlet-800.woff2") format("woff2"); font-weight: 800; font-display: block; }
+@font-face { font-family: "kit-jua"; src: url("jua-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-gowundodum"; src: url("gowundodum-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-gowunbatang"; src: url("gowunbatang-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-gowunbatang"; src: url("gowunbatang-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "kit-plex"; src: url("plex-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-plex"; src: url("plex-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "kit-gaegu"; src: url("gaegu-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-gaegu"; src: url("gaegu-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+@font-face { font-family: "kit-blackhan"; src: url("blackhan-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-dohyeon"; src: url("dohyeon-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-nanummj"; src: url("nanummj-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-nanummj"; src: url("nanummj-800.woff2") format("woff2"); font-weight: 800; font-display: block; }
+@font-face { font-family: "kit-nanumgt"; src: url("nanumgt-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
+@font-face { font-family: "kit-nanumgt"; src: url("nanumgt-800.woff2") format("woff2"); font-weight: 800; font-display: block; }
+@font-face { font-family: "kit-nanumpen"; src: url("nanumpen-400.woff2") format("woff2"); font-weight: 400; font-display: block; }
