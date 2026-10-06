@@ -315,6 +315,13 @@
         }
       });
     });
+    // 문장 끝이 거의 모두 "~니다."면 보고서처럼 딱딱하게 읽힌다.
+    const endings = sections.flatMap(sec => (Array.isArray(sec.paragraphs) ? sec.paragraphs : []))
+      .filter(isStr).join('\n').replace(/\*\*/g, '').split(/(?<=[.!?])\s+|\n+/).map(x => x.trim()).filter(x => /[가-힣][.!?]$/.test(x));
+    const formal = endings.filter(x => /니다[.!?]$/.test(x)).length;
+    if (endings.length >= 15 && formal / endings.length >= 0.9) {
+      tone.push({ level: 'warn', rule: 'tone', where: 'blog', message: `문장 끝 ${endings.length}개 중 ${formal}개가 "~니다"예요. 보고서처럼 딱딱하게 읽혀요.`, fix: '"~예요", "~거든요", "~해 보세요"를 섞어 리듬을 주세요.' });
+    }
     // 블로그 줄바꿈: 줄이 서술어로만 시작하면 말이 끝나기 전에 끊은 것이다.
     sections.forEach((sec, i) => (Array.isArray(sec.paragraphs) ? sec.paragraphs : []).forEach((p, j) => {
       if (!isStr(p)) return;
