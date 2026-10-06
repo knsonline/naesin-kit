@@ -315,6 +315,14 @@
         }
       });
     });
+    // 블로그 줄바꿈: 줄이 서술어로만 시작하면 말이 끝나기 전에 끊은 것이다.
+    sections.forEach((sec, i) => (Array.isArray(sec.paragraphs) ? sec.paragraphs : []).forEach((p, j) => {
+      if (!isStr(p)) return;
+      p.split('\n').slice(1).forEach(line => {
+        const m = line.trim().match(/^(합니다|입니다|됩니다|있습니다|했습니다|봅니다|씁니다|줍니다|정리했습니다|확인합니다)/);
+        if (m) tone.push({ level: 'warn', rule: 'tone', where: `blog.sections[${i}].paragraphs[${j}]`, message: `줄바꿈이 어색해요: 줄이 "${m[1]}"로 시작해요`, fix: '줄은 문장이나 구절이 끝나는 곳(마침표, 쉼표 뒤)에서만 바꾸세요.' });
+      });
+    }));
     // 카드 제목이 "핵심 분석", "학습 전략"처럼 이름표로 끝나면 주장이 없다.
     cards.forEach((c, i) => {
       if (isStr(c.title) && /(분석|총정리|정리|포인트|핵심|전략|비법|꿀팁|가이드|안내)$/.test(c.title.trim()) && c.layout !== 'closing') {
