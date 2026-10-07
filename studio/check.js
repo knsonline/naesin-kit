@@ -268,7 +268,11 @@
     const kindRef = new RegExp(KIND_RE + '\\s*(\\d+(?:\\s*[·,ㆍ~∼\\-]\\s*\\d+)*)\\s*번', 'g');
     const kindCount = new RegExp(KIND_RE + '\\s*(?:은|는|이|가)?\\s*(\\d+)\\s*문항', 'g');
     const kindPoints = new RegExp(KIND_RE + '\\s*(?:은|는|이|가)?\\s*(?:(\\d+)\\s*문항\\s*,?\\s*)?(\\d+(?:\\.\\d+)?)\\s*점', 'g');
-    texts.forEach(({ where, text, caption }) => {
+    // 학원이 직접 정한 첫인사(슬로건 포함)는 그대로 두므로 점검하지 않는다. 띄어쓰기·줄바꿈 차이는 무시한다.
+    const greetingWords = isStr(opts.greeting) ? opts.greeting.trim().split(/\s+/).filter(Boolean) : [];
+    const greetingRe = greetingWords.length ? new RegExp(greetingWords.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s*'), 'g') : null;
+    texts.forEach(({ where, text: full, caption }) => {
+      const text = greetingRe ? full.replace(greetingRe, ' ') : full;
       let m;
       if (questions.length) {
         kindRef.lastIndex = 0;

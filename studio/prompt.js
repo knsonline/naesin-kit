@@ -53,7 +53,7 @@
 ## 출력 형식 (이 구조 그대로, JSON 코드 블록 하나만)
 {
   "version": "2.0",
-  "academy": { "name": "", "region": "", "contact": "" },
+  "academy": { "name": "", "region": "", "contact": "", "greeting": "" },
   "exam": { "school": "", "grade": "", "term": "", "subject": "영어", "year": "", "source_file": "", "pages": 0 },
   "series": "OO중 N학년 N학기 OO고사 · 영어",
   "ledger": {

@@ -70,6 +70,7 @@
     return Object.assign({}, state.theme, {
       name: state.theme.name || academy.name || '',
       contact: state.theme.contact || academy.contact || '',
+      greeting: state.theme.greeting || academy.greeting || '',
     });
   };
   function applyTheme(t) {
@@ -199,11 +200,20 @@
     render(true);
     return true;
   }
+  // 채팅 AI가 답에 끼워 넣는 출처 표시. 따옴표가 섞여 있어 그대로 두면 JSON이 깨진다.
+  const CITATIONS = [
+    /\s*:?chatgpt-content-reference\{[^{}]*\}/g,
+    /\s*:?contentReference\[oaicite:\d+\]\{index=\d+\}/g,
+    /\s*\[oaicite:\d+\]/g,
+    /\s*【[^】]*†[^】]*】/g,
+    /\s*[^]*/g,
+  ];
   function parseData(text) {
-    try { return JSON.parse(text); } catch (e) { /* 앞뒤 설명이나 코드블록이 섞인 경우 */ }
-    const start = text.indexOf('{'), end = text.lastIndexOf('}');
+    const clean = CITATIONS.reduce((t, re) => t.replace(re, ''), String(text));
+    try { return JSON.parse(clean); } catch (e) { /* 앞뒤 설명이나 코드블록이 섞인 경우 */ }
+    const start = clean.indexOf('{'), end = clean.lastIndexOf('}');
     if (start < 0 || end < start) throw new Error('JSON을 찾지 못했어요');
-    return JSON.parse(text.slice(start, end + 1));
+    return JSON.parse(clean.slice(start, end + 1));
   }
 
   // ---------- 카드 편집 ----------
@@ -348,8 +358,8 @@
   // ---------- 점검 ----------
   let lastReport = null;
   function runCheck() {
-    const academyName = effectiveTheme().name;
-    const report = S.check.validate(state.data, { academyName });
+    const { name: academyName, greeting } = effectiveTheme();
+    const report = S.check.validate(state.data, { academyName, greeting });
     const overflow = [];
     state.overflow.forEach((list, i) => (list || []).forEach(w => overflow.push({
       level: 'error', rule: 'overflow', where: `cards[${i}]`, message: overflowText(w), fix: '스튜디오에서 실제 글꼴로 잰 결과예요.',
