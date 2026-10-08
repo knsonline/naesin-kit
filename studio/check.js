@@ -8,6 +8,9 @@
   const ROLES = ['intro', 'feature', 'strategy', 'example', 'closing'];
   const KIND_GROUPS = [['선택형', '선다형', '객관식'], ['서술형', '서답형', '주관식', '논술형'], ['단답형']];
   const KIND_RE = '(선택형|선다형|객관식|서술형|서답형|주관식|논술형|단답형)';
+  // "6번은", "8번과 10번", "서술형 3번" 같은 문항 번호. "3번 읽기"처럼 횟수를 말하는 건 잡지 않는다.
+  const ITEM_NO = new RegExp(KIND_RE + '\\s*\\d+(?:\\s*[·,ㆍ~∼\\-]\\s*\\d+)*\\s*번|\\d+\\s*번(?=\\s*(?:은|는|과|와|이|가|을|를|에서|에|의|도|만|부터|까지|처럼|문항|문제|[,·ㆍ.)~∼\\-]|\\n|$))');
+  const NO_ITEM_FIX = '다음 시험은 범위도 문제도 달라요. 번호 대신 이번 시험이 물은 방식(예: "정답을 두 개 고르게 했어요")과, 새 범위로 미리 할 연습·확인 기준으로 쓰세요.';
 
   // ---------- 카드 칸 크기: [글자 크기, 폭, 최대 줄 수] ----------
   const TITLE = [72, 904, 2], INTRO = [32, 904, 2], KICKER = [26, 700, 1];
@@ -180,7 +183,7 @@
     const sections = Array.isArray(blog.sections) ? blog.sections : [];
     if (!isStr(blog.title)) err('blog.title', '블로그 제목이 없어요.', '', 'schema');
     else if (blog.title.replace(/\n/g, '').length > 45) warn('blog.title', `블로그 제목이 ${blog.title.length}자예요.`, '45자 안쪽이 검색 결과에서 잘리지 않아요.', 'blog');
-    if (sections.length < 4) err('blog.sections', `블로그 절이 ${sections.length}개예요.`, '인사·총평, 특징, 대비, 대표 문항, 상담 안내 순으로 4개 이상 쓰세요.', 'blog');
+    if (sections.length < 4) err('blog.sections', `블로그 절이 ${sections.length}개예요.`, '인사·총평, 특징, 대표 문항, 다음 시험 대비, 상담 안내 순으로 4개 이상 쓰세요.', 'blog');
     sections.forEach((s, i) => {
       const where = `blog.sections[${i}]`;
       if (!ROLES.includes(s.role)) err(where, `절 역할(role) '${s.role}'을 알 수 없어요.`, `${ROLES.join(' / ')} 중 하나로 쓰세요.`, 'schema');
@@ -205,6 +208,16 @@
       if (!(name && t.includes(name)) && !/학원/.test(t)) err(`blog.sections[${sections.length - 1}]`, '마무리에 학원이 나오지 않아요.', '학원 이름(없으면 "우리 학원")으로 함께 준비하자고 제안하세요.', 'closing');
       if (!/상담|문의/.test(t)) err(`blog.sections[${sections.length - 1}]`, '마무리에 상담·문의 안내가 없어요.', '"~로 문의해 주세요"로 끝내세요. 가정 복습 안내로만 끝내지 마세요.', 'closing');
     }
+    // 다음 시험 대비는 범위와 문제가 달라지므로 이번 시험의 문항 번호로 말하지 않는다.
+    const strategyIdx = sections.map((s, i) => (s.role === 'strategy' ? i : -1)).filter(i => i >= 0);
+    if (sections.length && !strategyIdx.length) warn('blog.sections', '다음 시험 대비(role: strategy) 절이 없어요.', '이번 시험이 영역마다 물은 방식으로, 새 범위에서 미리 할 연습과 확인 기준을 쓰세요.', 'blog');
+    strategyIdx.forEach(i => {
+      const s = sections[i];
+      [s.heading].concat(Array.isArray(s.paragraphs) ? s.paragraphs : []).forEach((p, j) => {
+        const hit = isStr(p) && p.match(ITEM_NO);
+        if (hit) err(j ? `blog.sections[${i}].paragraphs[${j - 1}]` : `blog.sections[${i}].heading`, `다음 시험 대비에 이번 시험 문항 번호("${hit[0].trim()}")가 있어요.`, NO_ITEM_FIX, 'strategy');
+      });
+    });
     if (blogChars && blogChars < 1300) warn('blog', `블로그 본문이 ${blogChars}자(공백 제외)로 짧아요.`, '대표 문항 해설을 더 구체적으로 쓰세요. 길이를 채우려고 반복하지는 마세요.', 'blog');
     if (blogChars > 3600) warn('blog', `블로그 본문이 ${blogChars}자(공백 제외)로 길어요.`, '반복되는 문단을 줄이세요.', 'blog');
 
@@ -225,6 +238,10 @@
       if (c.layout === 'composition' && (!Array.isArray(c.stats) || c.stats.length !== 2)) err(`${where}.stats`, '배점 카드는 항목이 정확히 2개여야 해요.', '유형이 셋 이상이면 두 묶음으로 합치세요. 예: 선택형 / 서술형(단답형 포함)', 'schema');
       if (['points', 'closing'].includes(c.layout) && Array.isArray(c.items) && c.items.length > (c.layout === 'closing' ? 3 : 4)) err(`${where}.items`, `항목이 ${c.items.length}개예요.`, c.layout === 'closing' ? '3개 이하로 줄이세요.' : '4개 이하로 줄이세요.', 'schema');
       checkEvidence(c.evidence_ids, where, ['composition', 'points', 'comparison', 'excerpt'].includes(c.layout));
+      if (c.layout === 'closing' && Array.isArray(c.items)) c.items.forEach((it, j) => ['title', 'body'].forEach(k => {
+        const hit = it && isStr(it[k]) && it[k].match(ITEM_NO);
+        if (hit) err(`${where}.items[${j}].${k}`, `다음 시험 연습에 이번 시험 문항 번호("${hit[0].trim()}")가 있어요.`, NO_ITEM_FIX, 'strategy');
+      }));
       // 글자 길이 (스튜디오가 실제 글꼴로 다시 확인한다)
       const slots = SLOTS[c.layout] || {};
       Object.keys(slots).forEach(key => {
